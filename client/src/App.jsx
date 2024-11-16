@@ -10,32 +10,53 @@ import Features from "./pages/admin-view/Features";
 import Orders from "./pages/admin-view/Orders";
 import ShopingLayout from "./components/shoping-view/ShopingLayout";
 import PageNotFound from "./pages/not-found";
-import Home from "./pages/shoping-view/home";
-import Account from "./pages/shoping-view/Account";
-import Listing from "./pages/shoping-view/Listing";
-import Checkout from "./pages/shoping-view/Checkout";
 import ShopingHome from "./pages/shoping-view/home";
 import ShopingListing from "./pages/shoping-view/Listing";
 import ShopingAccount from "./pages/shoping-view/Account";
 import ShopingCheckout from "./pages/shoping-view/Checkout";
+import CheckAuth from "./components/common/CheckAuth";
+import AnAuthPage from "./pages/anauth-page";
 
 function App() {
+  const isAuthenticated = true;
+  const user = {
+    name:"rajan",
+    role:"admin"
+  };
   return (
     <Router>
       <Routes>
-        <Route path="/auth" element={<AuthLayout />}>
+        <Route
+          path="/auth"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AuthLayout />
+            </CheckAuth>
+          }
+        >
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AdminLayout />
+            </CheckAuth>
+          }
+        >
           <Route path="dashboard" element={<DashBoard />} />
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<Orders />} />
           <Route path="features" element={<Features />} />
         </Route>
 
-        <Route path="/shop" element={<ShopingLayout />}>
+        <Route path="/shop" element={
+          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <ShopingLayout />
+          </CheckAuth>
+        }>
           <Route path="home" element={<ShopingHome />} />
           <Route path="listing" element={<ShopingListing />} />
           <Route path="account" element={<ShopingAccount />} />
@@ -43,6 +64,7 @@ function App() {
         </Route>
 
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/anauth-page" element={<AnAuthPage />} />
       </Routes>
     </Router>
   );
