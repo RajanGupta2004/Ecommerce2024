@@ -1,7 +1,10 @@
 import CommonForm from "@/components/common/Form";
 import { registerFormControls } from "@/components/config";
+import { useToast } from "@/hooks/use-toast";
+import { userRegistration } from "@/store/auth-slice";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
   userName: "",
@@ -11,9 +14,23 @@ const initialState = {
 
 const Register = () => {
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { toast } = useToast()
   console.log(formData);
 
-  const onSubmit = () => {};
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(userRegistration(formData)).then((data)=>{
+      if(data.payload.status){
+        toast({
+          title: data?.payload.message,
+        })
+        navigate("/auth/login")
+      }
+    
+    })
+  };
   return (
     <div className="flex flex-col items-center justify-center ">
       <div className=" w-full md:w-[80%] lg:w-[60%] p-4 ">

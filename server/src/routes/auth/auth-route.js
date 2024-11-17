@@ -8,5 +8,6 @@ router.get("/healthcheck" , (req,res)=>{
     return res.status(200).json({status:"success" , message:"server is running "})
 })
 router.post("/register", userControllers.userRegistration);
+router.post("/login", userControllers.userLogin);
 
 export default router;
