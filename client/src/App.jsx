@@ -18,10 +18,10 @@ import CheckAuth from "./components/common/CheckAuth";
 import AnAuthPage from "./pages/anauth-page";
 
 function App() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const user = {
-    name:"rajan",
-    role:"admin"
+    name: "rajan",
+    role: "user",
   };
   return (
     <Router>
@@ -52,11 +52,14 @@ function App() {
           <Route path="features" element={<Features />} />
         </Route>
 
-        <Route path="/shop" element={
-          <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-            <ShopingLayout />
-          </CheckAuth>
-        }>
+        <Route
+          path="/shop"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShopingLayout />
+            </CheckAuth>
+          }
+        >
           <Route path="home" element={<ShopingHome />} />
           <Route path="listing" element={<ShopingListing />} />
           <Route path="account" element={<ShopingAccount />} />
