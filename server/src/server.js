@@ -1,9 +1,10 @@
 import express from "express";
-import connectDB from "./db/connectDB.js";
+import connectDB from "../src/db/connectDB.js";
 import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
 import cookieParser from "cookie-parser";
+import authRouter from "../src/routes/auth/auth-route.js";
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-app.listen(() => {
-  console.log(`server is running at port ${port}`);
+app.use("/api/v1",authRouter);
+
+app.listen(port , () => {
+  console.log(`server is running at port http://localhost:${port}`);
 });
