@@ -17,16 +17,21 @@ const Register = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { toast } = useToast()
-  console.log(formData);
+  // console.log(formData);
 
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(userRegistration(formData)).then((data)=>{
-      if(data.payload.status){
+      if(data.payload.success){
         toast({
           title: data?.payload.message,
         })
         navigate("/auth/login")
+      }else{
+        toast({
+          title: "user registration failed"
+        })
+
       }
     
     })

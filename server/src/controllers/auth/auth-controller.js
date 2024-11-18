@@ -1,4 +1,5 @@
 import User from "../../models/User.js";
+import GenerateToken from "../../utils/generateToken.js";
 import { encryptUserPassword } from "../../utils/hashedUserPassword.js";
 import bcrypt from 'bcrypt'
 
@@ -71,7 +72,34 @@ class userControllers {
       }
 
 
-      return res.status(200).json({status:"success" , message:"login successfull..."})
+      // generate jwt token
+
+      const {accessToken ,refreshToken} = await GenerateToken(existingUser)
+      // console.log(accessToken , refreshToken)
+      const option = {
+        httpOnly:true,
+        secure:true
+      }
+
+
+
+      const loggedInUser = await User.findById({_id:existingUser._id}).select("-password")
+
+      if (!loggedInUser) {
+        return res.status(500).json({
+            success: false,
+            message: "Something went wronge..."
+        })
+    }
+
+      return res.status(200).cookie("accesstoken" ,accessToken , option).json({
+        success:true,
+        message:"login successfulll....",
+        accessToken:accessToken,
+        user:loggedInUser
+      })
+
+
         
     } catch (error) {
         console.log("Error in login" , error)

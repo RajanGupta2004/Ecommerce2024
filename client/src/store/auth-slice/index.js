@@ -15,6 +15,7 @@ export const userRegistration = createAsyncThunk("auth/register" , async (formDa
     
   } catch (error) {
     console.log("error" , error)
+    return rejectWithValue(error.response?.data || { message: "Registration failed" });
     
   }
 })
