@@ -106,6 +106,24 @@ class userControllers {
         
     }
   }
+
+
+  static logoutUser  = async(req , res)=>{
+    try {
+
+      return res.status(200)
+      .clearCookie("accessToken")
+      .json({
+          success: true,
+          message: "User logged out"
+      })
+      
+    } catch (error) {
+      console.log("ERROR in logout" , error)
+      
+    }
+
+  }
 }
 
 
