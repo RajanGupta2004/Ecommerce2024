@@ -16,13 +16,18 @@ import ShopingAccount from "./pages/shoping-view/Account";
 import ShopingCheckout from "./pages/shoping-view/Checkout";
 import CheckAuth from "./components/common/CheckAuth";
 import AnAuthPage from "./pages/anauth-page";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isAuthenticated = false;
-  const user = {
-    name: "rajan",
-    role: "user",
-  };
+  // const isAuthenticated = false;
+  // const user = {
+  //   name: "rajan",
+  //   role: "user",
+  // };
+
+
+  const {isAuthenticated , user} = useSelector((state)=>state.auth)
+  console.log(isAuthenticated , user , 30 )
   return (
     <Router>
       <Routes>
